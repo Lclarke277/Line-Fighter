@@ -16,6 +16,8 @@
 
         function preload () {
 
+            game.load.image("background", 'assets/background.jpg');
+
             game.load.audio('bg-music', ['assets/jumpman.mp3','assets/jumpman.ogg']);
             var music;
 
@@ -25,6 +27,8 @@
         }
 
         function create () {
+
+            game.add.tileSprite(0, 0, 1000, 600, 'background');
 
             music = game.add.audio('bg-music');
             music.play();
