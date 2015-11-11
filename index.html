@@ -16,9 +16,7 @@
 
         function preload () {
 
-            game.load.image("background", 'assets/background.jpg');
-
-            game.load.audio('bg-music', ['assets/jumpman.mp3','assets/jumpman.ogg']);
+            game.load.audio('bg-music', ['assets/back2back.mp3','assets/back2back.ogg']);
             var music;
 
             game.load.spritesheet('Ryu', 'http://i.imgur.com/XqSbPF0.png',290, 178); 
@@ -27,8 +25,6 @@
         }
 
         function create () {
-
-            game.add.tileSprite(0, 0, 1000, 600, 'background');
 
             music = game.add.audio('bg-music');
             music.play();
