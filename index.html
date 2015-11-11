@@ -16,8 +16,9 @@
 
         function preload () {
 
-            game.load.audio('bg-music', ['assets/back2back.mp3','assets/back2back.ogg']);
-            var music;
+            game.load.image('background',"assets/images/BG-image.jpg");
+
+            game.load.audio('bg-music', ['assets/audio/back2back.mp3','assets/audio/back2back.ogg']);
 
             game.load.spritesheet('Ryu', 'http://i.imgur.com/XqSbPF0.png',290, 178); 
             game.load.spritesheet('Ken', 'http://i.imgur.com/mtJrD4y.png',368, 238); 
@@ -26,7 +27,14 @@
 
         function create () {
 
-            music = game.add.audio('bg-music');
+            background = game.add.tileSprite(0, 0, 720, 405, 'background');
+
+            background.x = 0;
+            background.y = 0;
+            background.height = game.height;
+            background.width = game.width;
+
+            var music = game.add.audio('bg-music');
             music.play();
 
             var Ryu = game.add.sprite(240, 390, 'Ryu');
@@ -45,6 +53,8 @@
         }
 
             function render() {
+
+
             game.debug.soundInfo(music, 20, 32);
         }
 
