@@ -17,18 +17,23 @@
         function preload () {
 
             game.load.image('background',"assets/images/BG-image.jpg");
-
             game.load.audio('bg-music', ['assets/audio/back2back.mp3','assets/audio/back2back.ogg']);
 
-            game.load.spritesheet('Ryu', 'http://i.imgur.com/XqSbPF0.png',290, 178); 
+            //game.load.spritesheet('button', 'assets/images/buttontest.jpg', 193, 71);
+
+            //Ryu Sprites 
+            game.load.spritesheet('Ryu', 'assets/Ryu/ryuidle.png',290, 178);
+            game.load.spritesheet('RyuFall', 'assets/Ryu/ryufall.png',290, 178);  
+
+            //Ken Sprites
             game.load.spritesheet('Ken', 'http://i.imgur.com/mtJrD4y.png',368, 238); 
+            game.load.spritesheet('KenAtt1', 'assets/Ken/kenattack1.png',368, 238); 
 
         }
 
         function create () {
 
-            background = game.add.tileSprite(0, 0, 720, 405, 'background');
-
+            background = game.add.sprite(0, 0,'background');
             background.x = 0;
             background.y = 0;
             background.height = game.height;
@@ -36,6 +41,8 @@
 
             var music = game.add.audio('bg-music');
             music.play();
+
+            //button = game.add.button(game.world.centerX - 95, 400, 'button', onUp, this, 2, 1, 0);
 
             var Ryu = game.add.sprite(240, 390, 'Ryu');
             var idle = Ryu.animations.add('idle');
