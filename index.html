@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Line Fighter</title>
+        <script src="phaser.min.js"></script>
+    </head>
+    <body>
+
+        <!-- ********************************* -->
+    <script type="text/javascript">
+
+    window.onload = function() {
+
+        var game = new Phaser.Game(720, 405, Phaser.AUTO, '', { preload: preload, create: create, rendner: render});
+
+        function preload () {
+
+            game.load.audio('bg-music', ['assets/jumpman.mp3','assets/jumpman.ogg']);
+            var music;
+
+            game.load.spritesheet('Ryu', 'http://i.imgur.com/XqSbPF0.png',290, 178); 
+            game.load.spritesheet('Ken', 'http://i.imgur.com/mtJrD4y.png',368, 238); 
+
+        }
+
+        function create () {
+
+            music = game.add.audio('bg-music');
+            music.play();
+
+            var Ryu = game.add.sprite(240, 390, 'Ryu');
+            var idle = Ryu.animations.add('idle');
+            Ryu.animations.play('idle', 15, true);
+
+            var Ken = game.add.sprite(480, 420, 'Ken');
+            var idle = Ken.animations.add('idle');
+            Ken.animations.play('idle', 15, true);
+
+            Ken.anchor.setTo(.5,1);
+            Ryu.anchor.setTo(.5,1);
+            Ryu.scale.x= -1;
+
+
+        }
+
+            function render() {
+            game.debug.soundInfo(music, 20, 32);
+        }
+
+    };
+
+    </script>
+
+    </body>
+</html>
