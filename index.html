@@ -12,7 +12,7 @@
 
     window.onload = function() {
 
-        var game = new Phaser.Game(720, 405, Phaser.AUTO, '', { preload: preload, create: create, rendner: render});
+        var game = new Phaser.Game(720, 405, Phaser.AUTO, '', { preload: preload, create: create, update: update, rendner: render});
 
         function preload () {
 
@@ -24,6 +24,7 @@
             //Ryu Sprites 
             game.load.spritesheet('Ryu', 'assets/Ryu/ryuidle.png',290, 178);
             game.load.spritesheet('RyuFall', 'assets/Ryu/ryufall.png',290, 178);  
+            game.load.spritesheet('RyuAtt1', 'assets/Ryu/ryuAttack1.png',290, 178);  
 
             //Ken Sprites
             game.load.spritesheet('Ken', 'http://i.imgur.com/mtJrD4y.png',368, 238); 
@@ -42,30 +43,36 @@
             var music = game.add.audio('bg-music');
             music.play();
 
-            //button = game.add.button(game.world.centerX - 95, 400, 'button', onUp, this, 2, 1, 0);
-
-            var Ryu = game.add.sprite(240, 390, 'Ryu');
+            var Ryu = game.add.sprite(240, 390, 'RyuFall');
             var idle = Ryu.animations.add('idle');
             Ryu.animations.play('idle', 15, true);
 
-            var Ken = game.add.sprite(480, 420, 'Ken');
+            var Ken = game.add.sprite(480, 420, 'KenAtt1');
             var idle = Ken.animations.add('idle');
             Ken.animations.play('idle', 15, true);
 
             Ken.anchor.setTo(.5,1);
             Ryu.anchor.setTo(.5,1);
             Ryu.scale.x= -1;
-
-
         }
 
-            function render() {
+            function update() {
 
+                if (game.input.activePointer.isDown){
+                    Ryu = game.add.sprite(480,420, 'RyuAtt1');
+                    var idle = Ryu.animations.add('RyuKick');
+                    Ryu.animations.play('RyuKick', 15, true);
+                }
+
+            };
+
+            function render() {
 
             game.debug.soundInfo(music, 20, 32);
         }
 
-    };
+
+         };
 
     </script>
 
