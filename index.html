@@ -12,11 +12,11 @@
 
     window.onload = function() {
 
-        var game = new Phaser.Game(720, 405, Phaser.AUTO, '', { preload: preload, create: create, rendner: render});
+        var game = new Phaser.Game(720, 405, Phaser.AUTO, '', { preload: preload, create: create, openWindow: openWindow, closeWindow: closeWindow, rendner: render});
 
         function preload () {
 
-            game.load.image('background',"assets/images/BG-image.jpg");
+            game.load.image('background','assets/images/BG-image.jpg');
             game.load.audio('bg-music', ['assets/audio/back2back.mp3','assets/audio/back2back.ogg']);
 
             //game.load.spritesheet('button', 'assets/images/buttontest.jpg', 193, 71);
@@ -29,7 +29,20 @@
             game.load.spritesheet('Ken', 'http://i.imgur.com/mtJrD4y.png',368, 238); 
             game.load.spritesheet('KenAtt1', 'assets/Ken/kenattack1.png',368, 238); 
 
+            game.load.spritesheet('button', 'assets/images/buttons.png',113, 49);
+            //game.load.image('box', 'assets/images/numberLine.png');
+            //game.load.image('close', 'assets/images/buttons.png');
+
+
         }
+
+        var background;    
+        var button;
+        var popup;
+        var tween = null;
+        var Ryu; 
+        var music;
+        var Ken;
 
         function create () {
 
@@ -38,12 +51,7 @@
             background.y = 0;
             background.height = game.height;
             background.width = game.width;
-
-            var music = game.add.audio('bg-music');
-            music.play();
-
-            //button = game.add.button(game.world.centerX - 95, 400, 'button', onUp, this, 2, 1, 0);
-
+           
             var Ryu = game.add.sprite(240, 390, 'Ryu');
             var idle = Ryu.animations.add('idle');
             Ryu.animations.play('idle', 15, true);
@@ -55,13 +63,72 @@
             Ken.anchor.setTo(.5,1);
             Ryu.anchor.setTo(.5,1);
             Ryu.scale.x= -1;
+           
+            var music = game.add.audio('bg-music');
+            music.play();
+
+            button = game.add.button(game.world.centerX - 95, 300, 'button', openWindow, this, 2, 1, 0);
+            button.input.useHandCursor = true;
+            
+
+          
+
+            
+                //  You can drag the pop-up window around
+                popup = game.add.sprite(game.world.centerX, game.world.centerY, 'button');
+                popup.alpha = 0.8;
+                popup.anchor.set(0.5);
+                popup.inputEnabled = true;
+                popup.input.enableDrag();
+
+               // Position the close button to the top-right of the popup sprite (minus 8px for spacing)
+                var pw = (popup.width / 2) - 30;
+                var ph = (popup.height / 2) - 8;
+
+                //  And click the close button to close it down again
+                // var closeButton = game.make.sprite(pw, -ph, 'close');
+                // closeButton.inputEnabled = true;
+                // closeButton.input.priorityID = 1;
+                // closeButton.input.useHandCursor = true;
+                // closeButton.events.onInputDown.add(closeWindow, this);
+
+                // //  Add the "close button" to the popup window image
+                // popup.addChild(closeButton);
+
+                //  Hide it awaiting a click
+                popup.scale.set(0.1);
+                //game.input.onDown.addOnce(stopAnimation, this);
 
 
         }
 
-            function render() {
+        function openWindow() {
 
+            if ((tween !== null && tween.isRunning) || popup.scale.x === 1)
+            {
+                return;
+            }
+            
+            //  Create a tween that will pop-open the window, but only if it's not already tweening or open
+            tween = game.add.tween(popup.scale).to( { x: 1, y: 1 }, 500, Phaser.Easing.Elastic.Out, true);
 
+        }
+
+        function closeWindow() {
+
+            if (tween && tween.isRunning || popup.scale.x === 0.1)
+            {
+                return;
+            }
+
+            //  Create a tween that will close the window, but only if it's not already tweening or closed
+            tween = game.add.tween(popup.scale).to( { x: 0.1, y: 0.1 }, 500, Phaser.Easing.Elastic.In, true);
+
+        }
+
+        function render() {
+
+            game.debug.text("Click to open window + drag + close", 32, 32);
             game.debug.soundInfo(music, 20, 32);
         }
 
