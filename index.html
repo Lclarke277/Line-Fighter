@@ -12,7 +12,11 @@
 
     window.onload = function() {
 
+<<<<<<< HEAD
         var game = new Phaser.Game(720, 405, Phaser.AUTO, '', { preload: preload, create: create, openWindow: openWindow, closeWindow: closeWindow, rendner: render});
+=======
+        var game = new Phaser.Game(720, 405, Phaser.AUTO, '', { preload: preload, create: create, update: update, rendner: render});
+>>>>>>> origin/master
 
         function preload () {
 
@@ -24,6 +28,7 @@
             //Ryu Sprites 
             game.load.spritesheet('Ryu', 'assets/Ryu/ryuidle.png',290, 178);
             game.load.spritesheet('RyuFall', 'assets/Ryu/ryufall.png',290, 178);  
+            game.load.spritesheet('RyuAtt1', 'assets/Ryu/ryuAttack1.png',290, 178);  
 
             //Ken Sprites
             game.load.spritesheet('Ken', 'http://i.imgur.com/mtJrD4y.png',368, 238); 
@@ -51,18 +56,27 @@
             background.y = 0;
             background.height = game.height;
             background.width = game.width;
+<<<<<<< HEAD
            
             var Ryu = game.add.sprite(240, 390, 'Ryu');
+=======
+
+            var music = game.add.audio('bg-music');
+            music.play();
+
+            var Ryu = game.add.sprite(240, 390, 'RyuFall');
+>>>>>>> origin/master
             var idle = Ryu.animations.add('idle');
             Ryu.animations.play('idle', 15, true);
 
-            var Ken = game.add.sprite(480, 420, 'Ken');
+            var Ken = game.add.sprite(480, 420, 'KenAtt1');
             var idle = Ken.animations.add('idle');
             Ken.animations.play('idle', 15, true);
 
             Ken.anchor.setTo(.5,1);
             Ryu.anchor.setTo(.5,1);
             Ryu.scale.x= -1;
+<<<<<<< HEAD
            
             var music = game.add.audio('bg-music');
             music.play();
@@ -111,9 +125,19 @@
             
             //  Create a tween that will pop-open the window, but only if it's not already tweening or open
             tween = game.add.tween(popup.scale).to( { x: 1, y: 1 }, 500, Phaser.Easing.Elastic.Out, true);
-
+=======
         }
 
+            function update() {
+>>>>>>> origin/master
+
+                if (game.input.activePointer.isDown){
+                    Ryu = game.add.sprite(480,420, 'RyuAtt1');
+                    var idle = Ryu.animations.add('RyuKick');
+                    Ryu.animations.play('RyuKick', 15, true);
+                }
+
+<<<<<<< HEAD
         function closeWindow() {
 
             if (tween && tween.isRunning || popup.scale.x === 0.1)
@@ -127,12 +151,18 @@
         }
 
         function render() {
+=======
+            };
+
+            function render() {
+>>>>>>> origin/master
 
             game.debug.text("Click to open window + drag + close", 32, 32);
             game.debug.soundInfo(music, 20, 32);
         }
 
-    };
+
+         };
 
     </script>
 
